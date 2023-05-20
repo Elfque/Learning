@@ -1,0 +1,35 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import Register from "./Auth/Register";
+import Login from "./Auth/Login";
+import AlertState from "../Context/alertContext/AlertState";
+import CourseState from "../Context/courseContext/CourseState";
+import Courses from "./Pages/Courses";
+import Course from "./Pages/Course";
+import AuthState from "../Context/authContext/AuthState";
+import JoinCourse from "./layout/JoinCourse";
+
+const Learning = () => {
+  return (
+    <AuthState>
+      <CourseState>
+        <AlertState>
+          <Router>
+            <div>
+              <Routes>
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/course/:id" element={<Course />} />
+                <Route path="/joincourse" element={<JoinCourse />} />
+              </Routes>
+            </div>
+          </Router>
+        </AlertState>
+      </CourseState>
+    </AuthState>
+  );
+};
+
+export default Learning;
