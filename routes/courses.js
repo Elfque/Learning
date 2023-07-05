@@ -12,13 +12,14 @@ router.post(
   middle,
   [check("name", "Course Name cannot be empty").not().isEmpty()],
   async (req, res) => {
+    const { id } = req.user.id;
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name } = req.body;
+    const { name, student, messages, materials } = req.body;
 
     try {
       let user = User.findById(id);
@@ -27,7 +28,7 @@ router.post(
         student,
         messages,
         materials,
-        courseOwner: req.user.id,
+        courseOwner: id,
         teacher: user.userName,
       });
 

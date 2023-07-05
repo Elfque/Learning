@@ -30,7 +30,6 @@ const upload = multer({ storage });
 // REGISTER USER
 router.post(
   "/",
-  upload.single("file"),
   [
     check("email", "Please provide an email").isEmail(),
     check("password", "Password cannot be less than 8 characters").isLength({
@@ -57,7 +56,6 @@ router.post(
         password,
         userName,
         accountType,
-        profilePicture: "",
       });
 
       const salt = await bcrypt.genSalt(10);

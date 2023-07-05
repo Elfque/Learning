@@ -19,7 +19,7 @@ const TeacherHome = () => {
         ))}
       </div>
 
-      <Overlay closer={() => setAddCourse(false)} open={addCourse} />
+      {addCourse && <Overlay closer={() => setAddCourse(false)} />}
       <AddCourse close={() => setAddCourse(false)} opener={addCourse} />
     </div>
   );

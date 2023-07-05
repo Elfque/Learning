@@ -4,7 +4,7 @@ import Alert from "../layout/Alert";
 import AuthContext from "../../Context/authContext/AuthContext";
 import AlertContext from "../../Context/alertContext/AlertContext";
 import axios from "axios";
-import Dropzone from "react-dropzone";
+import Loader from "../layout/Loader";
 
 const Register = () => {
   const authCon = useContext(AuthContext);
@@ -22,24 +22,20 @@ const Register = () => {
     password1: "",
     accountType: "Student",
   });
+  const [loading, setLoading] = useState(false);
 
-  const [picture, setPicture] = useState(null);
-
-  // const { email, userName, password, password1, accountType } = regDetails;
-
-  const handleImageDrop = (acceptedFiles) => {
-    setPicture(acceptedFiles[0]);
-  };
+  const { email, userName, password, password1, accountType } = regDetails;
 
   const changing = (e) =>
     setRegDetails({ ...regDetails, [e.target.name]: e.target.value });
 
-  const registerUse = async (formData) => {
+  const registerUse = async () => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
+    setLoading(true);
 
     try {
       const res = await axios.post(
@@ -48,34 +44,34 @@ const Register = () => {
         config
       );
 
-      if (res.data.msg === "Success") {
-        navigate("/login");
-      }
+      setLoading(false);
+      navigate("/signin");
+      // window.location.reload()
     } catch (error) {
+      console.log(error.response.error.msg);
       authError(error);
+      setLoading(false);
     }
   };
 
   const onRegister = (e) => {
     e.preventDefault();
-    const formData = new FormData();
 
-    for (let detail in regDetails) {
-      formData.append(detail, regDetails[detail]);
-    }
-    formData.append("file", picture);
-
-    if (regDetails.password !== regDetails.password1) {
+    if (password !== password1) {
       addAlert("Passwords Don't match");
       return;
     }
 
-    registerUse(formData);
+    registerUse();
   };
 
   return (
     <div className="h-[100vh] flex items-center justify-center">
-      <form action="" onSubmit={onRegister} className="max-w-[20rem]">
+      <form
+        action=""
+        onSubmit={onRegister}
+        className="max-w-[20rem]  border border-blue-500 rounded-2xl p-4"
+      >
         <Alert />
         <h3 className="text-center pb-4 font-semibold text-2xl">Sign Up</h3>
         <div className="form-control mt-4">
@@ -89,6 +85,7 @@ const Register = () => {
             required
           />
         </div>
+
         <div className="form-control mt-4">
           <input
             type="text"
@@ -100,6 +97,7 @@ const Register = () => {
             required
           />
         </div>
+
         <div className="form-control mt-4">
           <input
             type="password"
@@ -111,6 +109,7 @@ const Register = () => {
             required
           />
         </div>
+
         <div className="form-control mt-4">
           <input
             type="password"
@@ -123,7 +122,7 @@ const Register = () => {
           />
         </div>
 
-        {/* <div className="type_part flex justify-around mt-4">
+        <div className="type_part flex justify-around mt-4">
           <div className="control text-center border-2 border-black rounded-md p-2 text-sm">
             <label htmlFor="Teacher">Teacher</label>
             <input
@@ -148,46 +147,28 @@ const Register = () => {
               onChange={changing}
             />
           </div>
-        </div> */}
+        </div>
 
-        <div className="form-control mt-4">
+        {/* <div className="form-control mt-4">
           <label htmlFor="type">Type (Student or Teacher)</label>
           <select name="type" id="type" className="inp" onSelect={changing}>
             <option value="Student">Student</option>
             <option value="Teacher">Teacher</option>
           </select>
-        </div>
-
-        {/* PICTURE UPLOAD PART */}
-        <Dropzone
-          acceptedFiles=".jpg,.jpeg,.png"
-          multiple={false}
-          onDrop={handleImageDrop}
-        >
-          {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps()} className="drop">
-              <input {...getInputProps()} />
-              {picture ? (
-                <p>{picture.name}</p>
-              ) : (
-                <p>Drag and drop profile picture here</p>
-              )}
-            </div>
-          )}
-        </Dropzone>
+        </div> */}
 
         <div className="text-center">
           <button
             type="submit"
-            className="bg-black w-3/5 rounded-[20px] p-2 text-white mt-4"
+            className="bg-bluish w-3/5 rounded-[20px] p-2 text-white mt-4"
           >
-            Sign Up
+            {loading && <Loader />} Sign Up
           </button>
         </div>
 
         <div className="text-sm mt-4 text-center">
           Already have an account?{" "}
-          <Link className="text-blue-600" to={"/login"}>
+          <Link className="text-blue-600" to={"/signin"}>
             Sign In
           </Link>
         </div>

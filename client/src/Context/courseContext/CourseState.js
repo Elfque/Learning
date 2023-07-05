@@ -3,13 +3,7 @@ import CourseContext from "./CourseContext";
 import CourseReducer from "./CourseReducer";
 // import { v4 } from "uuid";
 import axios from "axios";
-import {
-  CREATE_COURSE,
-  DELETE_COURSE,
-  EDIT_COURSE,
-  GET_COURSES,
-  GET_COURSE,
-} from "../type";
+import { DELETE_COURSE, EDIT_COURSE, GET_COURSES, GET_COURSE } from "../type";
 
 const CourseState = (prop) => {
   const myName = "John Doe";
@@ -79,26 +73,6 @@ const CourseState = (prop) => {
 
   const [state, dispatch] = useReducer(CourseReducer, initialState);
 
-  // CREATE COURSE
-  const createCourse = async (formData) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    try {
-      const res = await axios.post(
-        "http://localhost:3200/api/courses",
-        formData,
-        config
-      );
-
-      dispatch({ type: CREATE_COURSE, payload: res.data });
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
-  };
-
   // DELETE COURSE
   const deleteCourse = async (id) => {
     const res = axios.delete(`http://localhost:3200/api/courses/${id}`);
@@ -109,6 +83,7 @@ const CourseState = (prop) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
+        authorize: localStorage.getItem("token"),
       },
     };
 
@@ -142,18 +117,17 @@ const CourseState = (prop) => {
     } catch (error) {
       console.log(error.response.data.message);
     }
-    // dispatch({ type: GET_COURSE, payload:  });
   };
 
   const getCourse = (id) => {
-    // try {
-    //   const res = axios.get(`http://localhost:3200/api/courses/${id}`);
+    try {
+      const res = axios.get(`http://localhost:3200/api/courses/${id}`);
 
-    //   dispatch({ type: GET_COURSES, payload: res.data });
-    // } catch (error) {
-    //   console.log(error.response.data.message);
-    // }
-    dispatch({ type: GET_COURSE, payload: id });
+      dispatch({ type: GET_COURSES, payload: res.data });
+      // dispatch({ type: GET_COURSE, payload: id });
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
   };
 
   const value = {

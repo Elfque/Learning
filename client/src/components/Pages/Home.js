@@ -10,28 +10,26 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   loadUser();
-  //   console.log(user);
+  useEffect(() => {
+    loadUser();
 
-  //   setTimeout(() => {
-  //     if (!isAuthenticated) {
-  //       navigate("/login");
-  //       return;
-  //     }
-  //   }, 4000);
+    // setTimeout(() => {
+    //   if (!isAuthenticated) {
+    //     navigate("/signin");
+    //     return;
+    //   }
+    // }, 4000);
 
-  // eslint-disable-next-line
-  // }, []);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
-      {/* {user && ( */}
       <div className="w-[90%] mx-auto">
-        {accountType === "Teacher" ? <TeacherHome /> : <StudentHome />}
-        {/* {user.accountType === "Teacher" ? <TeacherHome /> : <StudentHome />} */}
+        {/* {user && accountType === "Teacher" ? <TeacherHome /> : <StudentHome />} */}
+        {user?.accountType === "Teacher" ? <TeacherHome /> : <StudentHome />}
+        {/* } */}
       </div>
-      {/* )} */}
     </>
   );
 };

@@ -17,8 +17,8 @@ const Learning = () => {
           <Router>
             <div>
               <Routes>
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Register />} />
+                <Route path="/signin" element={<Login />} />
                 <Route path="/" element={<Home />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/course/:id" element={<Course />} />

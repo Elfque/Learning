@@ -13,40 +13,43 @@ const Navbar = ({ opener }) => {
     setShowMenu(false);
     logOutUser();
 
-    navigate("/login");
+    navigate("/signin");
   };
 
   return (
     <div className="relative">
       <nav className="nav flex justify-between py-1 items-center mx-auto">
-        <div className="logo font-semibold text-2xl">Elfque</div>
-        {/* {user && ( */}
-        <div className="prof flex gap-4 items-center">
-          {accountType === "Teacher" ? (
-            <button
-              className="bg-black text-white p-2 text-[10px] rounded-lg font-semibold"
-              onClick={opener}
-            >
-              Add Course
-            </button>
-          ) : (
-            <button className="bg-black text-white p-2 text-[10px] rounded-lg font-semibold">
-              <Link to={"/joincouse"}>Join Course</Link>
-            </button>
-          )}
+        <div className="logo font-semibold text-2xl font-reos">Learners</div>
+        {user && (
+          <div className="prof flex gap-4 items-center">
+            {user?.accountType === "Teacher" ? (
+              <button
+                className="bg-bluish text-white p-2 text-[10px] rounded-lg font-semibold"
+                onClick={opener}
+              >
+                Add Course
+              </button>
+            ) : (
+              <button
+                className="bg-bluish text-white p-2 text-[10px] rounded-lg font-semibold"
+                onClick={opener}
+              >
+                Join Course
+              </button>
+            )}
 
-          <img
-            src="/img/image1.jpg"
-            alt=""
-            className="w-8 h-8 object-cover rounded-[50%] border-black border-2"
-            onClick={() => setShowMenu(!showMenu)}
-            onBlur={() => setShowMenu(false)}
-          />
-          <div className={`over ${showMenu ? "block" : "hidden"}`}>
-            <button onClick={logOut}>Logout</button>
+            <img
+              src="/img/image1.jpg"
+              alt=""
+              className="w-8 h-8 object-cover rounded-[50%] border-black border-2"
+              onClick={() => setShowMenu(!showMenu)}
+              onBlur={() => setShowMenu(false)}
+            />
+            <div className={`over ${showMenu ? "block" : "hidden"}`}>
+              <button onClick={logOut}>Logout</button>
+            </div>
           </div>
-        </div>
-        {/* )} */}
+        )}
       </nav>
     </div>
   );

@@ -1,18 +1,37 @@
 import { useContext, useState } from "react";
-import CourseContext from "../../Context/courseContext/CourseContext";
+import AlertContext from "../../Context/alertContext/AlertContext";
+import Alert from "./Alert";
+import axios from "axios";
+
+const instance = axios.create({
+  headers: {
+    "Content-Type": "application/json",
+    authorize: localStorage.getItem("token"),
+  },
+});
 
 const AddCourse = ({ close, opener }) => {
-  const courseCon = useContext(CourseContext);
-  const { createCourse } = courseCon;
+  const { addAlert } = useContext(AlertContext);
 
   const [newCourse, setNewCourse] = useState({ name: "" });
 
-  const { name } = newCourse;
+  const courseCreator = async () => {
+    // const config = {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     authorize: localStorage.getItem("token"),
+    //   },
+    // };
+    try {
+      const res = await instance.post(
+        "http://localhost:3200/api/courses",
+        newCourse
+      );
 
-  const courseCreator = (e) => {
-    e.preventDefault();
-    createCourse({ name });
-    close();
+      addAlert("Course Added Successfully", "good");
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
   };
 
   const changing = (e) =>
@@ -28,6 +47,7 @@ const AddCourse = ({ close, opener }) => {
       </div>
       <form action="" onSubmit={courseCreator} className="mt-2 p-4">
         <div className="text-xl text-center mb-4 font-semibold">Add Course</div>
+        <Alert />
         <div className="control">
           <label htmlFor="courseName">Course Name</label>
           <input

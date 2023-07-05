@@ -12,7 +12,9 @@ const Alert = () => {
       {alert.map((ale) => (
         <div
           key={ale.id}
-          className="bg-red-500 p-2 text-white text-sm font-semibold my-1"
+          className={`${
+            ale.type === "good" ? "bg-green-500" : "bg-red-500"
+          } p-2 text-white text-sm font-semibold my-1`}
         >
           {ale.text}
         </div>

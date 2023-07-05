@@ -1,9 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: Reospec;
+  src: url("./FONT/Reospec.otf");
+}
 
 .inp {
-  @apply block border-gray-600 border-[1px] rounded-sm outline-none px-2 py-1 text-sm w-[100%] bg-transparent;
+  @apply block border-bluish/50 border-[2px] rounded-sm outline-none px-2 py-1 text-sm w-[100%] bg-transparent text-sm;
 }
 .add_inp {
   @apply block border-gray-500 border rounded-sm outline-none px-2 py-1 text-sm w-60 mt-1 mb-4;
@@ -49,8 +53,7 @@ code {
 }
 
 .drop {
-  /* @apply border border-black rounded-lg h-20 p-2 flex items-center mt-4 text-center w-[100%]; */
-  @apply bg-stone-300 border border-black rounded-lg h-20 p-2 flex items-center mt-4 text-center w-[100%];
+  @apply bg-bluish/10 border border-bluish rounded-lg h-20 p-2 flex items-center mt-4 text-center w-[100%];
 }
 
 .course {
@@ -59,4 +62,33 @@ code {
 
 .add_course {
   @apply absolute left-[50%] -translate-y-[50%] -translate-x-[50%] z-20 bg-white  rounded-lg transform duration-500;
+}
+
+.grrid {
+  grid-template-columns: repeat(auto-fill, minmax(1fr, 20rem));
+}
+
+.sign_btn {
+  @apply bg-bluish w-3/5 rounded-[20px] p-2 text-white mt-8;
+}
+
+/* LOADER */
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 3px solid transparent;
+  border-bottom-color: #ffffff;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
